@@ -1,8 +1,7 @@
 /**
- * Define mute word list.
+ * Define list of words (encoded to base64) to mute (and hide subtitles).
  */
-// test words
-var words = ['danger', 'dang', 'heck', 'crap'];
+var words = ['fuck', 'shit'];
 
 /**
  * Mutes audio on subtitles if they cont ***** (five stars)
@@ -17,7 +16,7 @@ function on_subtitle(name, value) {
         if (!value) {
             return false;
         }
-        // lowercase it
+        // decode the bad word
         value = value.toLowerCase();
         return (value.indexOf(v) !== -1);
     })) {
@@ -34,8 +33,10 @@ function on_subtitle(name, value) {
 function mute(option) {
     if (option) {
         mp.set_property("volume", "0");
+        mp.set_property("sub-visibility", "no");
     } else {
         mp.set_property("volume", "100");
+        mp.set_property("sub-visibility", "yes");
     }
 }
 
