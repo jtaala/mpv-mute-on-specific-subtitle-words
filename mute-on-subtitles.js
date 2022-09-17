@@ -1,4 +1,10 @@
 /**
+ * Define mute word list.
+ */
+// test words
+var words = ['danger', 'dang', 'heck', 'crap'];
+
+/**
  * Mutes audio on subtitles if they cont ***** (five stars)
  */
 function on_subtitle(name, value) {
@@ -7,21 +13,18 @@ function on_subtitle(name, value) {
         return;
     }
 
-    if (contains(value, "DANGER")) {
-       mute(true);
+    if (words.some(function (v) {
+        if (!value) {
+            return false;
+        }
+        // lowercase it
+        value = value.toLowerCase();
+        return (value.indexOf(v) !== -1);
+    })) {
+        mute(true);
     } else {
-       mute(false);
+        mute(false);
     }
-}
-
-function contains(source, value) {
-    if (!value) {
-        return;
-    }
-
-    // lowercase it
-    value = value.toLowerCase();
-    return (source.indexOf(value) !== -1);
 }
 
 /**
