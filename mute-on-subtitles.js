@@ -1,7 +1,7 @@
 /**
  * Define list of words (encoded to base64) to mute (and hide subtitles).
  */
-var words = ['fuck', 'shit'];
+var words = ['piss', 'ass', 'bitch', 'fuck', 'shit'];
 
 /**
  * Mutes audio on subtitles if they cont ***** (five stars)
@@ -16,9 +16,8 @@ function on_subtitle(name, value) {
         if (!value) {
             return false;
         }
-        // decode the bad word
-        value = value.toLowerCase();
-        return (value.indexOf(v) !== -1);
+        // word bounday match on bad word
+        return new RegExp("\\b"+ v + "\\b", 'i').test(value);
     })) {
         mute(true);
     } else {
