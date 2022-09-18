@@ -12,6 +12,8 @@ var subvis = "yes"; // init
 /**
  * Checks subtitle text for specified words (as defined in the words array).
  * Uses boundary word regex check to minimise false positives.
+ * @param {String} name 
+ * @param {String} value 
  */
 function on_subtitle(name, value) {
     if (!value) {
