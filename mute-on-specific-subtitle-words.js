@@ -30,7 +30,7 @@ function on_subtitle(name, value) {
         if (!value) {
             return false;
         }
-        // use word boundary match on bad word
+        // ignore case and use word boundary match on bad word
         return new RegExp("\\b"+ v + "\\b", 'i').test(value);
     })) {
         mute(true);
