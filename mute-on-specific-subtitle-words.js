@@ -1,7 +1,7 @@
 /**
  * Script which observes subtitle changes for specified words (as defined in the words array)
  * and mutes mpv and hides subtitles (for the duration of that specific subtitle).
- * Retores previous volume and subtitle visibility on the next "good" subtitle.
+ * Retores previous volume and subtitle visibility when muted subtitle finished.
  */
 
 //Define list of words to mute (and hide subtitles) - add your own words here.
