@@ -5,7 +5,7 @@
  */
 
 //Define list of words to mute (and hide subtitles) - add your own words here.
-var words = ['ass', 'bitch', 'fuck', 'shit'];
+var words = ['piss', 'pissing', 'ass', 'bitch', 'fuck', 'shit', 'jesus'];
 var volume = "100"; // init
 var subvis = "yes"; // init
 
