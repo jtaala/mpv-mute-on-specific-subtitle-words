@@ -1,12 +1,11 @@
 /**
  * Script which observes subtitle changes for specified words (as defined in the words array)
  * and mutes mpv and hides subtitles (for the duration of that specific subtitle).
- * Retores previous volume and subtitle visibility when muted subtitle finished.
+ * Unmutes and retores previous subtitle visibility when muted subtitle ends.
  */
 
 //Define list of words to mute (and hide subtitles) - add your own words here.
 var words = ['ass', 'bitch', 'fuck', 'shit'];
-var volume = "100"; // init
 var subvis = "yes"; // init
 
 /**
@@ -21,8 +20,7 @@ function on_subtitle(name, value) {
         return;
     }
 
-    // get current volume and subtitle visibility (for next restore)
-    volume = mp.get_property("volume");
+    // get subtitle visibility (for next restore)
     subvis = mp.get_property("sub-visibility");
 
     // check for bad word regex match on current subtitle text
@@ -45,10 +43,10 @@ function on_subtitle(name, value) {
  */
 function mute(option) {
     if (option) {
-        mp.set_property("volume", "0");
+        mp.set_property("ao-mute", "yes");
         mp.set_property("sub-visibility", "no");
     } else {
-        mp.set_property("volume", volume);
+        mp.set_property("ao-mute", "no");
         mp.set_property("sub-visibility", subvis);
     }
 }
