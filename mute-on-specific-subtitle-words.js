@@ -95,7 +95,7 @@ function modifySubtitle(subtitle) {
 
     // remove any persistent overlay
     if (overlay) {
-        overlay.remove();
+        overlay = null;
     }
     // revert to normal operations
     mp.set_property("ao-mute", "no");
