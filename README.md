@@ -1,5 +1,11 @@
 # mpv script to mute on specific subtitle words
-mpv script which observes subtitle changes for specified words (as defined in the words array) and mutes mpv and hides subtitles (for the duration of that specific subtitle).  Unmutes and restores subtitle visibility settings when the subtitle that contains specified word(s) ends.
+`mpv` script which observes subtitle changes for specified words (as defined in the regex word array) and mutes mpv for the duration of that specific subtitle.  
+
+Displayed subtitles are modified and the specified word is replaced with underscores (e.g. _____).
+
+Once a modified subtitle is finished, this script unmutes and restores original subtitle (and OSD) settings.
+
+_NOTE: when modifying a displayed subtitle, this script generates and displays a custom OSD message (with subtitle font, size, position etc.)._
 
 Uses `word boundary` regex matching to minimise false positives (e.g if the word `real` has been added, then this script will match on `real` but not `surreal`).
 
