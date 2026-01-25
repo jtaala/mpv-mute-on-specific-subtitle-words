@@ -129,10 +129,10 @@ mp.observe_property("sub-text", "string", function(name, value) {
     })) {
         var subtitle = value;
         regexWord.forEach(function(w, index, array) {
-            var r = regex(w);
-            var matchedWords = subtitle.match(r) || []; // return array of matches
+            var matchedWords = subtitle.match(regex(w)) || []; // return array of matches
             matchedWords.forEach(function(match) {
-                subtitle = subtitle.replace(r, match.replace(/./g, '*'));
+                // replace match with stars
+                subtitle = subtitle.replace(match, match.replace(/./g, '*'));
             });
         });
         modifySubtitle(subtitle);
