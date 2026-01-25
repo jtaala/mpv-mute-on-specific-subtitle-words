@@ -14,6 +14,7 @@
  */
 var regexWord = [
     'ass', 'asses', 'punkass\\S*', 'arse[s]*',
+    'bastard[os]*',
     'bitch\\S*',
     '\\S*fuck\\S*',
     'god\\S*' ,
