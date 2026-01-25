@@ -13,13 +13,13 @@
  * NOTE2: during runtime, regexWord list will be treated as case-insensitive.
  */
 var regexWord = [
-    'ass\\S*', 'punkass',
+    'ass', 'asses', 'punkass\\S*', 'arse[s]*',
     'bitch\\S*',
     '\\S*fuck\\S*',
     'god\\S*' ,
     'jesus\\S*', 'christ',
     'piss\\S*',
-    '\\S*shit\\S*', 'bullshit'
+    '\\S*shit\\S*'
 ];
 var subvis = "yes"; // init
 var overlay;
@@ -127,7 +127,11 @@ mp.observe_property("sub-text", "string", function(name, value) {
     })) {
         var subtitle = value;
         regexWord.forEach(function(w, index, array) {
-            subtitle = subtitle.replace(regex(w), "_____");
+            var r = regex(w);
+            var matchedWords = subtitle.match(r) || []; // return array of matches
+            matchedWords.forEach(function(match) {
+                subtitle = subtitle.replace(r, match.replace(/./g, '*'));
+            });
         });
         modifySubtitle(subtitle);
     } else {

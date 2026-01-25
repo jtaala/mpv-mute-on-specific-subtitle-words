@@ -1,7 +1,7 @@
 # mpv script to mute on specific subtitle words
 `mpv` script which observes subtitle changes for specified words (as defined in the regex word array) and mutes mpv for the duration of that specific subtitle.  
 
-Displayed subtitles are modified and the specified word is replaced with underscores (e.g. _____).
+Displayed subtitles are modified and the specified word is replaced with stars (e.g. *****).
 
 Once a modified subtitle is finished, this script unmutes and restores original subtitle (and OSD) settings.
 
