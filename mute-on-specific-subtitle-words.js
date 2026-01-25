@@ -9,17 +9,17 @@
 // .
 /**
  * Define list of words to mute (and hide subtitles) - add your own words here.
- * NOTE1: '\s*' matches on zero or more non-whitespace characters.
+ * NOTE1: '\\S*' matches on zero or more non-whitespace characters.
  * NOTE2: during runtime, regexWord list will be treated as case-insensitive.
  */
 var regexWord = [
-    'ass\s*', 'punkass',
-    'bitch\s*',
-    '\s*fuck\s*',
-    'god\s*' ,
-    'jesus\s*', 'christ',
-    'piss\s*',
-    '\s*shit\s*', 'bullshit'
+    'ass\\S*', 'punkass',
+    'bitch\\S*',
+    '\\S*fuck\\S*',
+    'god\\S*' ,
+    'jesus\\S*', 'christ',
+    'piss\\S*',
+    '\\S*shit\\S*', 'bullshit'
 ];
 var subvis = "yes"; // init
 var overlay;
@@ -60,7 +60,7 @@ for (key in settings) {
  * @param {String} value 
  */
 function regex(value) {
-    return new RegExp("\\b"+ value + "\\b", 'i');
+    return new RegExp("\\b"+ value + "\\b", 'gmi');
 }
 
 /**
