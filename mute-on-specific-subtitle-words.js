@@ -5,8 +5,6 @@
  * Unmutes and retores previous subtitle visibility when on new subtitle.
  */
 
-//
-// .
 /**
  * Define list of words to mute (and hide subtitles) - add your own words here.
  * NOTE1: '\\S*' matches on zero or more non-whitespace characters.
@@ -22,9 +20,9 @@ var regexWord = [
     'piss\\S*',
     '\\S*shit\\S*'
 ];
+
 var subvis = "yes"; // init
 var overlay;
-
 // get original settings
 var origSettings = {};
 [
@@ -113,8 +111,8 @@ function modifySubtitle(subtitle) {
  * @param {String} name 
  * @param {String} value 
  */
-mp.observe_property("sub-text", "string", function(name, value) {
-    if (!value) {
+mp.observe_property("sub-text", "string", function(name, subtitle) {
+    if (!subtitle) {
         modifySubtitle();
         return;
     }
@@ -125,9 +123,8 @@ mp.observe_property("sub-text", "string", function(name, value) {
     // check for bad word regex match on current subtitle text
     if (regexWord.some(function (v) {
         // ignore case and use word boundary match on bad word
-        return regex(v).test(value);
+        return regex(v).test(subtitle);
     })) {
-        var subtitle = value;
         regexWord.forEach(function(w, index, array) {
             var matchedWords = subtitle.match(regex(w)) || []; // return array of matches
             matchedWords.forEach(function(match) {
