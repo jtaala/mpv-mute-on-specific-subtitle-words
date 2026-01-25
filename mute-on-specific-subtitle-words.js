@@ -1,12 +1,27 @@
 /**
  * Script which observes subtitle changes for specified words (as defined in the words array)
- * and mutes mpv and hides subtitles (for the duration of that specific subtitle).
- * Unmutes and retores previous subtitle visibility when muted subtitle ends.
+ * and mutes mpv. Replaces the specified word in shows the modified subtitle using and OSD
+ * message that looks like a subtitle.
+ * Unmutes and retores previous subtitle visibility when on new subtitle.
  */
 
 //Define list of words to mute (and hide subtitles) - add your own words here.
-var words = ['piss', 'pissing', 'ass', 'bitch', 'fuck', 'shit', 'jesus', 'shitting'];
+var regexWord = [
+    'ass',
+    'bitch.*',
+    'fuck.*', 
+    'god.*' ,
+    'jesus.*', 'christ',
+    'piss.*',
+    'shit.*',
+];
 var subvis = "yes"; // init
+var overlay;
+
+// set overlay options (to mimic subtitles)
+mp.set_property("osd-align-x", "center");
+mp.set_property("osd-align-y", "bottom");
+mp.set_property("osd-font-size", "36");
 
 /**
  * Checks subtitle text for specified words (as defined in the words array).
@@ -16,7 +31,7 @@ var subvis = "yes"; // init
  */
 function on_subtitle(name, value) {
     if (!value) {
-        mute(false);
+        modifySubtitle();
         return;
     }
 
@@ -24,31 +39,43 @@ function on_subtitle(name, value) {
     subvis = mp.get_property("sub-visibility");
 
     // check for bad word regex match on current subtitle text
-    if (words.some(function (v) {
-        if (!value) {
-            return false;
-        }
+    if (regexWord.some(function (v) {
         // ignore case and use word boundary match on bad word
         return new RegExp("\\b"+ v + "\\b", 'i').test(value);
     })) {
-        mute(true);
+        var subtitle = value;
+        regexWord.forEach(function(w, index, array) {
+            subtitle = subtitle.replace(new RegExp(w, "i"), "_____");
+        });
+        modifySubtitle(subtitle);
     } else {
-        mute(false);
+        modifySubtitle();
     }
 }
 
 /**
- * Mutes and hides subtitles (visibility) in mpv iff true.
- * @param {Boolean} option 
+ * Mutes and modifies shown subtitle in mpv iff true.
+ * @param {String} subtitle 
  */
-function mute(option) {
-    if (option) {
+function modifySubtitle(subtitle) {
+    if (subtitle) {
         mp.set_property("ao-mute", "yes");
         mp.set_property("sub-visibility", "no");
-    } else {
-        mp.set_property("ao-mute", "no");
-        mp.set_property("sub-visibility", subvis);
+
+        // show overlay "subtitle"
+        overlay = mp.create_osd_overlay('ass-events');
+        overlay.data = subtitle;
+        overlay.update();
+        return;
     }
+
+    // remove any persistent overlay
+    if (overlay) {
+        overlay.remove();
+    }
+    // revert to normal operations
+    mp.set_property("ao-mute", "no");
+    mp.set_property("sub-visibility", subvis);
 }
 
 // set observer for all subtitle text changes
