@@ -64,6 +64,17 @@ function regex(value) {
 }
 
 /**
+ * Sets the OSD settings based on the supplied settings Object.
+ * @param {Object} settingObject 
+ */
+function setOsdSettings(settingObject) {
+    mp.set_property("osd-align-x", settingObject["osd-align-x"]);
+    mp.set_property("osd-align-y", settingObject["osd-align-y"]);
+    mp.set_property("osd-margin-y", settingObject["osd-margin-y"]);
+    mp.set_property("osd-font-size", settingObject["osd-font-size"]);
+}
+
+/**
  * Mutes and modifies shown subtitle in mpv iff true.
  * @param {String} subtitle 
  */
@@ -71,6 +82,9 @@ function modifySubtitle(subtitle) {
     if (subtitle) {
         mp.set_property("ao-mute", "yes");
         mp.set_property("sub-visibility", "no");
+
+        // set osd settings
+        setOsdSettings(settings);
 
         // show overlay "subtitle"
         overlay = mp.create_osd_overlay('ass-events');
@@ -86,6 +100,9 @@ function modifySubtitle(subtitle) {
     // revert to normal operations
     mp.set_property("ao-mute", "no");
     mp.set_property("sub-visibility", subvis);
+
+    // set osd to original settings
+    setOsdSettings(origSettings);
 }
 
 /**
@@ -100,7 +117,7 @@ mp.observe_property("sub-text", "string", function(name, value) {
         return;
     }
 
-    // get subtitle visibility (for next restore)
+    // update subtitle visibility var (for next restore)
     subvis = mp.get_property("sub-visibility");
 
     // check for bad word regex match on current subtitle text
