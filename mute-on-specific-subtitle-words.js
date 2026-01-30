@@ -11,7 +11,7 @@
  * NOTE2: during runtime, regexWord list will be treated as case-insensitive.
  */
 var regexWord = [
-    'ass', 'asses', 'punkass\\S*', 'arse[s]*',
+    'ass', 'asses', 'asshole\\S*' , 'punkass\\S*', 'arse[sh]\\S*',
     'bastard[os]*',
     'bitch\\S*',
     '\\S*fuck\\S*',
